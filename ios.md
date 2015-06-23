@@ -201,15 +201,12 @@ PHP程序员要注意，在这里不能用单引号，即使只有一个字符�
 
 ### 类
 
-#### 接口和实现
-Objective-C的类分为接口定义和实现两个部分。接口定义（Interface）放在头文件中，文件扩展名是.h，实现（implementation）放在实现文件中，文件扩展名是.m（也有.mm的扩展名，表示Objective-C和C++混编的代码）。
+#### 头文件和实现
+Objective-C的类分为头文件和实现两个部分。头文件定义（Interface）放在头文件中，文件扩展名是.h，实现（implementation）放在实现文件中，文件扩展名是.m（也有.mm的扩展名，表示Objective-C和C++混编的代码）。
 
-`接口定义也可以写在.m文件中，但最好不要这么干`//! 某些情况下你的接口和属性不希望向外暴露可以在m里面写interface  
+`头文件定义也可以写在.m文件中，假如你的接口和属性不希望向外暴露可以在m里面写`
 
 需要注意的是，与Objective-C的interface概念最接近的是C和C++里的头文件，它与implementation是成双成对出现的，作用是声明类的成员变量和方法。它与Java的interface概念完全不同：
-
-- Objective-C里，interface有且只有一个实现，Java的interface可以有0-N个实现
-- Objective-C里，interface可以定义成员属性，Java里不可以
 
 在Objective-C里，和Java的Interface概念相似的是Protocol，下文会讲到。
 
@@ -269,7 +266,7 @@ Implementation
 	}
 
 #### 私有方法和公开方法
-写在.h头文件里的方法都是公开的，Objective-C里没有私有方法的概念（没有你说个蛋啊，哈哈哈哈）。//! 当然写在m里面的方法 都是不公开的
+写在.h头文件里的方法都是公开的，写在m里面的方法 都是不公开的 
 
 官方并没有提到Objective-C怎么实现私有方法，我查阅了stackoverflow，统一的答案是，要实现私有方法的效果只能借助Category，不过，根据我的测试，即使采用了Category，也不能阻止外部的代码调用这个“私有方法”，只是Xcode不支持“私有方法”的自动完成，并会有警告提示，运行的时候，还是会成功的。各位看官知道有这么回事就可以了，这里不深讲。
 category是一般要在一个对象上实现一个方法而无法改动原来代码的情况下，可以做一个这个类的category，是的这个类的实例拥有了这个方法的使用权。但是多个category方法不能重名否则会有冲突。经常的用法就是对着NSString这样的类无法继承无法扩展就使用category.
@@ -332,6 +329,7 @@ selector就是一个方法指针，类似PHP里的动态方法名：
 			$this->$fun_name();
 		}
 	}
+//! 略微不一样的是 @selector(method:)会在编译时被检查，方法是否存在，而如果使用反射字符串的方法 如果方法不在，运行时会crash说找不到方法
 
 在Objective-C里，selector主要用来做两类事情：
 
